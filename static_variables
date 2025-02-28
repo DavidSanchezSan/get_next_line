@@ -1,0 +1,149 @@
+Variables estáticas en C:
+
+En programación en C, una variable estática se declara usando la palabra clave static y tiene la propiedad de mantener su valor entre múltiples llamadas a funciones. Se inicializa una sola vez y no se destruye cuando la función devuelve un valor. Extiende el tiempo de vida de la variable hasta el final del programa.
+
+Ejemplo:
+#include <stdio.h>
+
+// Función con variable estática
+int fun()
+{
+    static int count = 0;
+    count++;
+    return count;
+}
+int main()
+{
+    printf("%d », fun());
+    printf("%d », fun());
+    return 0;
+}
+
+Salida
+1 2 
+
+Explicación: El programa anterior imprime 1 2 porque la variable estática count sólo se inicializa una vez. En la primera llamada a fun(), count se incrementa a 1, que es lo que se imprime. En la segunda llamada, la variable local normal tendría valor 1 ya que habría sido creada e inicializada de nuevo, pero la variable count es 2 porque no fue destruida con la función. Por eso es capaz de mantener su valor entre múltiples llamadas a la función.
+
+Sintaxis:
+
+La variable estática puede declararse simplemente anteponiendo la palabra clave static a la declaración de variable normal.
+
+	static dataType variableName;
+
+Los siguientes ejemplos demuestran el uso de variables estáticas en programas C:
+
+Dirección de Retorno de una Variable Local desde una Función:
+Como las variables estáticas viven hasta el final del programa, podemos usarlas para devolver datos por referencia desde una función en C:
+
+#include <stdio.h>
+int* fun()
+{
+    
+    // Crea y devuelve la variable estática
+    static int local_var = 123
+    return &local_var;
+    
+}
+int main()
+{
+    printf(«%d», *fun());
+    return 0;
+}
+
+Salida
+123
+
+Explicación: En este programa, fun() devuelve un puntero a la variable local estática local_var, que conserva su valor incluso después de que la función salga. A diferencia de las variables locales normales, que se destruyen cuando la función existe.
+
+Controlar la profundidad de la recursión:
+Como estas variables sólo se inicializan una vez y conservan su valor, se pueden utilizar para controlar la recursión en caso de llamadas recursivas infinitas.
+
+#include <stdio.h>
+
+// función recursiva que va de n a 0
+void fun(int n)
+{
+    if (n == 0) return;
+    printf("%d », n);
+    fun(n - 1);
+}
+int main()
+{
+    fun(-1);
+    return 0;
+}
+
+Salida
+(recursividad infinita)
+
+El programa anterior es un ejemplo en el que un valor específico de n (aquí todos los valores negativos) conduce a una recursión infinita. Se puede utilizar una variable estática para controlar la profundidad de la recursión en este caso y evitar el desbordamiento de la pila.
+
+#include <stdio.h>
+
+// Función recursiva que va de n a 0
+// Terminará para profundidades recursivas
+// mayor que 10
+void fun(int n)
+{
+    
+    // Variable estática
+    static int profundidad = 0
+    if (n == 0 || profundidad > 10) return;
+    printf("%d », n);
+    
+    // Aumenta con el número de llamadas recursivas
+    profundidad++;
+    fun(n - 1);
+}
+int main()
+{
+    fun(-1);
+    return 0;
+}
+
+Salida
+-1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11
+
+Explicación: En este programa, la variable estática profundidad retiene su valor a través de llamadas recursivas, permitiendo a la función rastrear la profundidad de la recursión. Asegura que la recursión termina cuando la profundidad > 10, previniendo excesivas llamadas recursivas y un potencial desbordamiento de la pila.
+
+Variables estáticas globales:
+Las variables estáticas suelen declararse dentro de las funciones, pero también pueden declararse fuera de ellas (en el ámbito global). El ámbito de las variables estáticas globales se limita al archivo en el que están definidas (vinculación interna). Esto significa que no se puede acceder a ellas fuera de la unidad de traducción actual (fichero fuente C).
+
+Aparte de eso, no hay ningún efecto de static en las variables globales en C.
+
+Ejemplo:
+
+#include <stdio.h>
+
+// Variable global estática
+static int globalVar = 5;
+
+void display()
+{
+    printf(«%d\n», globalVar);
+}
+int main()
+{
+    display();  
+    globalVar = 10;
+    display();  
+    return 0;
+}
+
+Salida
+5
+10
+
+Hechos interesantes:
+A continuación se presentan algunos hechos interesantes acerca de las variables estáticas:
+
+	-->Las variables estáticas (como las variables globales) se inicializan como 0 si no se inicializan explícitamente.
+	-->En C, las variables estáticas sólo pueden inicializarse usando literales constantes.
+
+Variables Locales vs Variables Locales Estáticas:
+Las variables locales estáticas y las variables locales se comportan de forma diferente entre sí. La siguiente tabla lista las principales diferencias entre ellas:
+Variable local = Local para la función o ell bloque, existe sólo durante la ejecución de la función, es reinicializada cada vez que la función es llamada se almacena en la pila (stack).
+Variable estática = Local Local para la función o el bloque, persiste durante la ejecución del programa, es inicializada solo una vez, se almacena en el segmento de datos (data segment).
+
+
+
