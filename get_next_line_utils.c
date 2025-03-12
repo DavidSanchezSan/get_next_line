@@ -12,6 +12,25 @@
 
 #include "get_next_line.h"
 
+// Function that returns a pointer to the first matched character
+// or NULL if the character is not found.
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	a;
+
+	a = (char)c;
+	while (*s != '\0')
+	{
+		if (*s == a)
+			return ((char *)s);
+		s++;
+	}
+	if (a == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+
 // Function that concatenate strings.
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
