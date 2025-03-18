@@ -6,11 +6,62 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:02:14 by dasanche          #+#    #+#             */
-/*   Updated: 2025/03/05 16:17:23 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:34:51 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+// Function that fills the first n bytes of the memory area pointed to
+// by s with the constant byte c.
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			x;
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)s;
+	x = 0;
+	while (x < n)
+	{
+		ptr[x] = c;
+		x++;
+	}
+	return (s);
+}
+
+// Function that allocates memory for an array of nmemb elements of
+// size bytes each and returns a pointer to the allocated memory.
+// The memory is set to zero.
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	size_t	total;
+	void	*ptr;
+
+	total = nmemb * size;
+	ptr = malloc(total);
+	if (ptr == NULL)
+		return (NULL);
+	ft_memset(ptr, 0, total);
+	return (ptr);
+}
+
+// Function function returns a pointer to a new string which is a duplicate of
+// the string s.  Memory for the new string is obtained with malloc, and can
+// be freed with free.
+
+char	*ft_strdup(const char *s)
+{
+	size_t	len;
+	char	*copy;
+
+	len = ft_strlen(s);
+	copy = malloc(len + 1);
+	if (copy == NULL)
+		return (NULL);
+	ft_strlcpy(copy, s, len + 1);
+	return (copy);
+}
 
 // Function that returns a pointer to the first matched character
 // or NULL if the character is not found.
@@ -35,9 +86,9 @@ char	*ft_strchr(const char *s, int c)
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t		x;
-	size_t		len_dst;
-	size_t		len_src;
+	size_t	x;
+	size_t	len_dst;
+	size_t	len_src;
 
 	len_dst = ft_strlen(dst);
 	len_src = ft_strlen(src);
@@ -123,4 +174,50 @@ void	ft_bzero(void *s, size_t n)
 		ptr[x] = '\0';
 		x++;
 	}
+}
+
+// Reserves and returns a substring of the string ‘s’.
+// The substring starts from index ‘start’ and has a maximum length of ‘len’.
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char		*subs;
+	const char	*to_copy;
+
+	if (s == NULL || start >= ft_strlen(s) || len <= 0)
+		return (ft_calloc(1, sizeof(char)));
+	if (len >= ft_strlen(s))
+		len = ft_strlen(s) - start;
+	if (len + start > ft_strlen(s))
+		subs = malloc((len) * sizeof(char));
+	else
+		subs = malloc((len + 1) * sizeof(char));
+	to_copy = &s[start];
+	if (subs == NULL)
+		return (NULL);
+	ft_memcpy(subs, to_copy, len);
+	subs[len] = '\0';
+	return (subs);
+}
+
+// Function that copies n bytes from memory area src to memory area dest.
+// The memory areas must not overlap.
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t			x;
+	unsigned char	*ptr_dest;
+	unsigned char	*ptr_src;
+
+	ptr_dest = (unsigned char *)dest;
+	ptr_src = (unsigned char *)src;
+	x = 0;
+	if (src == dest)
+		return (dest);
+	while (x < n)
+	{
+		ptr_dest[x] = ptr_src[x];
+		x++;
+	}
+	return (ptr_dest);
 }

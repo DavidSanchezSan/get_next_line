@@ -6,19 +6,25 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:03:38 by dasanche          #+#    #+#             */
-/*   Updated: 2025/03/05 16:18:02 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:34:47 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE 8
+# define BUFFER_SIZE 10
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 char	*get_next_line(int fd);
+void	*ft_memset(void *s, int c, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+char	*ft_strdup(const char *s);
+char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_bzero(void *s, size_t n);
 size_t	ft_strlen(const char *s);
