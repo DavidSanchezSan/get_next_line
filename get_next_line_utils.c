@@ -6,7 +6,7 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:02:14 by dasanche          #+#    #+#             */
-/*   Updated: 2025/03/18 14:34:51 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:27:39 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,23 +157,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcat(new_string, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
 	new_string[ft_strlen(new_string)] = '\0';
 	return (new_string);
-}
-/* Function that erases the data in the n bytes of the memory starting
-at the location pointed to by s, by writing zeros (bytes containing '\0')
-to that area. */
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t			x;
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *)s;
-	x = 0;
-	while (x < n)
-	{
-		ptr[x] = '\0';
-		x++;
-	}
 }
 
 // Reserves and returns a substring of the string ‘s’.

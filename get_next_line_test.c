@@ -6,7 +6,7 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:36:18 by dasanche          #+#    #+#             */
-/*   Updated: 2025/03/18 14:34:53 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:27:42 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ char	*get_next_line_test(int fd)
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
-		// printf("Bytes leídos: %d\n",bytes_read);
-		// printf("Contenido del buffer: %s\n",buffer);
+		if (stored == NULL && bytes_read == 0)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		if (stored == NULL)
 			stored = ft_strdup(buffer);
 		else
@@ -51,18 +54,15 @@ char	*get_next_line_test(int fd)
 			free(stored);
 			stored = temp;
 		}
-		// printf("Contenido de stored: %s\n",stored);
 		if (ft_strchr(stored, '\n') != NULL)
 			break ;
-		// printf("Contenido de line: %s\n",line);
 	}
 	if (ft_strchr(stored, '\n') != NULL)
 	{
-		while (stored[to_end] != '\n'
-			&& stored[to_end] != '\0')
+		while (stored[to_end] != '\n' && stored[to_end] != '\0')
 			to_end++;
 		line = ft_substr(stored, 0, to_end);
-		temp = ft_substr(stored, to_end + 1, (ft_strlen(stored) - to_end));
+		temp = ft_substr(stored, to_end + 1, (ft_strlen(stored) - to_end - 1));
 		free(stored);
 		stored = temp;
 	}
@@ -80,27 +80,19 @@ int	main(void)
 {
 	int fd;
 	char *str;
+
 	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error de apertura");
 		return (1);
 	}
-	str = get_next_line_test(fd);
-	printf("--------------------------------------------------------------\n");
-	printf("%s\n", str);
-	str = get_next_line_test(fd);
-	printf("--------------------------------------------------------------\n");
-	printf("%s\n", str);
-	str = get_next_line_test(fd);
-	printf("--------------------------------------------------------------\n");
-	printf("%s\n", str);
-	str = get_next_line_test(fd);
-	printf("--------------------------------------------------------------\n");
-	printf("%s\n", str);
-	str = get_next_line_test(fd);
-	printf("--------------------------------------------------------------\n");
-	printf("%s\n", str);
+	while ((str = get_next_line_test(fd)) != NULL)
+	{
+		printf("--------------------------------------------------------------\n");
+		printf("%s\n", str);
+		free(str);
+	}
 	close(fd);
 	return (0);
 }
