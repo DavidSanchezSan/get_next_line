@@ -6,7 +6,7 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:02:14 by dasanche          #+#    #+#             */
-/*   Updated: 2025/04/01 15:39:19 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:21:30 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,29 @@ size_t	ft_strlen(const char *s)
 
 // Reserves with malloc and returns a new string,
 // formed by the concatenation of ‘s1’ and ‘s2’.
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*new_string;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
+	char *new_string;
+	char *ptr;
+	
 	new_string = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (new_string == NULL)
 		return (NULL);
-	while (s1[i] != '\0')
+	ptr = new_string;
+	while (*s1)
 	{
-		new_string[i] = s1[i];
-		i++;
+		*ptr = *s1;
+		ptr++;
+		s1++;
 	}
-	while (s2[j] != '\0')
+	while (*s2)
 	{
-		new_string[i] = s2[j];
-		i++;
-		j++;
+		*ptr = *s2;
+		ptr++;
+		s2++;
 	}
-	new_string[i] = '\0';
+	*ptr = '\0';
 	return (new_string);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:02:18 by dasanche          #+#    #+#             */
-/*   Updated: 2025/04/01 15:46:03 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:13:03 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,9 @@ static char	*join_free(char *buffer, char *stored)
 {
 	char	*temp;
 
-	temp = NULL;
 	temp = ft_strjoin(stored, buffer);
 	free(stored);
-	stored = ft_strdup(temp);
-	free(temp);
-	temp = NULL;
-	return (stored);
+	return (temp);
 }
 
 static char	*ft_read_line(int *fd, int *bytes_read, char *buffer, char *stored)
@@ -31,7 +27,11 @@ static char	*ft_read_line(int *fd, int *bytes_read, char *buffer, char *stored)
 	{
 		*bytes_read = read(*fd, buffer, BUFFER_SIZE);
 		if (*bytes_read == -1)
+		{
+			free(stored);
+			stored = NULL;
 			return (NULL);
+		}
 		buffer[*bytes_read] = '\0';
 		if (stored == NULL && *bytes_read == 0)
 			return (NULL);
@@ -42,6 +42,13 @@ static char	*ft_read_line(int *fd, int *bytes_read, char *buffer, char *stored)
 			break ;
 	}
 	return (stored);
+}
+
+static char	*cleanup_stored(char **stored, char *line)
+{
+	free(*stored);
+	*stored = NULL;
+	return (line);
 }
 
 static char	*find_line(char **stored, int bytes_read)
@@ -64,9 +71,10 @@ static char	*find_line(char **stored, int bytes_read)
 	}
 	else if (bytes_read == 0 && *stored != NULL)
 	{
-		line = ft_strdup(*stored);
-		free(*stored);
-		*stored = NULL;
+		if ((*stored)[0] == '\0')
+			return (cleanup_stored(stored, NULL));
+		else
+			return (line = ft_strdup(*stored), cleanup_stored(stored, line));
 	}
 	return (line);
 }
@@ -109,12 +117,11 @@ char	*get_next_line(int fd)
 // 	}
 // 	while ((str = get_next_line(fd)) != NULL)
 // 	{
-// 		printf("%s", str);
-// 		free(str);
 // 		count_lines++;
+// 		printf("%d	%s", count_lines, str);
+// 		free(str);
 // 	}
-// 	printf("%s", str);
-// 	printf("\n%d\n", count_lines);
+// 	printf("\n       %s", str);
 // 	close(fd);
 // 	return (0);
 // }
