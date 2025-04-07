@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:02:14 by dasanche          #+#    #+#             */
-/*   Updated: 2025/04/07 12:32:56 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/04/07 13:18:22 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 // Function function returns a pointer to a new string which is a duplicate of
 // the string s.  Memory for the new string is obtained with malloc, and can
