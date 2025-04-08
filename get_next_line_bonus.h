@@ -6,7 +6,7 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:03:38 by dasanche          #+#    #+#             */
-/*   Updated: 2025/04/07 13:22:37 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:30:26 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
+#  define BUFFER_SIZE 100
 # endif // BUFFER_SIZE
 
 char	*get_next_line(int fd);

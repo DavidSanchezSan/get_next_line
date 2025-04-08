@@ -6,13 +6,13 @@
 /*   By: dasanche <dasanche@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 15:02:18 by dasanche          #+#    #+#             */
-/*   Updated: 2025/04/07 13:43:01 by dasanche         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:10:20 by dasanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static char	*join_free(char *buffer, char *stored)
+static char	*ft_join_free(char *buffer, char *stored)
 {
 	char	*temp;
 
@@ -37,21 +37,21 @@ static char	*ft_read_line(int *fd, int *bytes_read, char *buffer, char *stored)
 			return (NULL);
 		if (stored == NULL)
 			stored = ft_strdup("");
-		stored = join_free(buffer, stored);
+		stored = ft_join_free(buffer, stored);
 		if (ft_strchr(stored, '\n') != NULL)
 			break ;
 	}
 	return (stored);
 }
 
-static char	*cleanup_stored(char **stored, char *line)
+static char	*ft_cleanup_stored(char **stored, char *line)
 {
 	free(*stored);
 	*stored = NULL;
 	return (line);
 }
 
-static char	*find_line(char **stored, int bytes_read)
+static char	*ft_find_line(char **stored, int bytes_read)
 {
 	char	*line;
 	char	*temp;
@@ -72,9 +72,9 @@ static char	*find_line(char **stored, int bytes_read)
 	else if (bytes_read == 0 && *stored != NULL)
 	{
 		if ((*stored)[0] == '\0')
-			return (cleanup_stored(stored, NULL));
+			return (ft_cleanup_stored(stored, NULL));
 		else
-			return (line = ft_strdup(*stored), cleanup_stored(stored, line));
+			return (line = ft_strdup(*stored), ft_cleanup_stored(stored, line));
 	}
 	return (line);
 }
@@ -96,7 +96,7 @@ char	*get_next_line(int fd)
 	stored[fd] = ft_read_line(&fd, &bytes_read, buffer, stored[fd]);
 	if (!stored[fd])
 		return (free(buffer), stored[fd] = NULL, NULL);
-	line = find_line(&stored[fd], bytes_read);
+	line = ft_find_line(&stored[fd], bytes_read);
 	free(buffer);
 	buffer = NULL;
 	return (line);
